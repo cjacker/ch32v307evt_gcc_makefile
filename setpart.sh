@@ -21,7 +21,9 @@ if [ $# -ne 1 ]; then
 fi
 
 # iterate the part list to found part info.
-PART=$1
+# convert $1 to lower case
+
+PART=$(echo "$1" | tr '[:upper:]' '[:lower:]')
 FLASHSIZE=
 RAMSIZE=
 STARTUP_ASM=
@@ -50,7 +52,7 @@ fi
 
 setpart()
 {
-	PART_FAMILY=$1
+  PART_FAMILY=$1
   if [ -f ./CH32V_firmware_library/Peripheral/inc/$PART_FAMILY"0x.h" ]; then
     sed -i "s/^TARGET = .*/TARGET = $PART/g" Makefile
     # generate the Linker script
@@ -64,19 +66,26 @@ setpart()
 }
 
 if [[ $PART = ch32v0* ]]; then
-	setpart ch32v0
+  setpart ch32v0
 fi
 
 if [[ $PART = ch32v1* ]]; then
-	setpart ch32v1
+  setpart ch32v1
 fi
 
 if [[ $PART = ch32v2* ]]; then
-	setpart ch32v2
+  setpart ch32v2
+  if [ $STARTUP_ASM == "startup_ch32v20x_D8.S" ]; then
+    sed -i "s/^TARGET_DEFS =.*/TARGET_DEFS = -DCH32V20x_D8/g" Makefile
+  elif [ $STARTUP_ASM == "startup_ch32v20x_D8W.S" ]; then
+    sed -i "s/^TARGET_DEFS =.*/TARGET_DEFS = -DCH32V20x_D8W/g" Makefile
+  else
+    sed -i "s/^TARGET_DEFS =.*/TARGET_DEFS = /g" Makefile
+  fi
 fi
 
 if [[ $PART = ch32v3* ]]; then
-	setpart ch32v3
+  setpart ch32v3
 fi
 
 
