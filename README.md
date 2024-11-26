@@ -23,3 +23,10 @@ All examples shipped in original EVT package provided in 'Examples' dir.
 The default 'User' codes is 'GPIO_Toggle' example, the default system frequency is set to 'SYSCLK_FREQ_96MHz_HSI' in 'User/system_ch32v30x.c'.
 
 To build the project, type `make`.
+
+## Note
+
+Please refer to [opensource-toolchain-ch32v tutorial](https://github.com/cjacker/opensource-toolchain-ch32v) for more info.
+
+And you must use [this latest WCH OpenOCD](https://github.com/cjacker/wch-openocd).
+
